@@ -39,5 +39,3 @@ app.get('/get-task/:id', async (req, res) => {
         res.status(500).json({ message: 'Failed to retrieve task' });
     }
 });
-
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
