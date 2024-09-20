@@ -57,7 +57,7 @@ app.post('/create-texture-task', async (req, res) => {
 
     } catch (error) {
         console.error('Error creating Text-to-Texture task:', error);
-        res.status(500).json({ message: 'Failed to create Text-to-Texture task' });
+        res.status(500).json({ message: 'Failed to create Text-to-Texture task, reason: '+ error });
     }
 });
 
@@ -70,7 +70,7 @@ app.get('/get-task/:id', async (req, res) => {
         res.json(response.data);
     } catch (error) {
         console.error('Error retrieving task:', error);
-        res.status(500).json({ message: 'Failed to retrieve task' });
+        res.status(500).json({ message: 'Failed to retrieve task, reason: '+ error });
     }
 });
 app.get('/get-task/:id', async (req, res) => {
@@ -82,7 +82,7 @@ app.get('/get-task/:id', async (req, res) => {
         res.json(response.data);
     } catch (error) {
         console.error('Error retrieving task:', error);
-        res.status(500).json({ message: 'Failed to retrieve task' });
+        res.status(500).json({ message: 'Failed to retrieve task, reason: ' + error });
     }
 });
 
@@ -95,7 +95,7 @@ app.get('/get-texture-task/:id', async (req, res) => {
         res.json(response.data);
     } catch (error) {
         console.error('Error retrieving texture task:', error);
-        res.status(500).json({ message: 'Failed to retrieve texture task' });
+        res.status(500).json({ message: 'Failed to retrieve texture task, reason: ' + error });
     }
 });
 
