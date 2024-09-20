@@ -20,7 +20,7 @@ app.post('/create-task', async (req, res) => {
         res.json(response.data);
       } catch (error) {
         console.error('Error creating task:', error);
-        res.status(500).json({ message: 'Failed to create task' });
+        res.status(500).json({ message: 'Failed to create task, reason: '+ error });
       }
 });
 
@@ -43,7 +43,7 @@ app.post('/create-texture-task', async (req, res) => {
         res.json(response.data);
     } catch (error) {
         console.error('Error creating Text-to-3D task:', error);
-        res.status(500).json({ message: 'Failed to create Text-to-3D task' });
+        res.status(500).json({ message: 'Failed to create texture task, reason: '+ error });
     }
 });
 
