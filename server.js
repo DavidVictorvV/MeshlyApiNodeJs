@@ -73,5 +73,30 @@ app.get('/get-task/:id', async (req, res) => {
         res.status(500).json({ message: 'Failed to retrieve task' });
     }
 });
+app.get('/get-task/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const response = await axios.get(`https://api.meshy.ai/v2/text-to-3d/${id}`, {
+            headers: { 'Authorization': `Bearer ${process.env.MESHY_API_KEY}` }
+        });
+        res.json(response.data);
+    } catch (error) {
+        console.error('Error retrieving task:', error);
+        res.status(500).json({ message: 'Failed to retrieve task' });
+    }
+});
+
+app.get('/get-texture-task/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const response = await axios.get(`https://api.meshy.ai/v1/text-to-texture/${id}`, {
+            headers: { 'Authorization': `Bearer ${process.env.MESHY_API_KEY}` }
+        });
+        res.json(response.data);
+    } catch (error) {
+        console.error('Error retrieving texture task:', error);
+        res.status(500).json({ message: 'Failed to retrieve texture task' });
+    }
+});
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
