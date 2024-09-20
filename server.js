@@ -19,17 +19,28 @@ app.post('/create-task', async (req, res) => {
         });
 
         console.log('Text-to-3D response:', textTo3DResponse.data);
-        const modelUrls = textTo3DResponse.data.model_urls; 
 
         if (textTo3DResponse.data.status !== 'SUCCEEDED') {
             return res.status(500).json({ message: 'Text-to-3D task failed or is not completed yet.' });
         }
 
-        const modelUrl = modelUrls.glb || modelUrls.obj || modelUrls.fbx;
+        res.json({
+            textTo3D: textTo3DResponse.data,
+        });
 
+    } catch (error) {
+        console.error('Error creating Text-to-3D task:', error);
+        res.status(500).json({ message: 'Failed to create Text-to-3D task' });
+    }
+});
+
+app.post('/create-texture-task', async (req, res) => {
+    console.log('Text-to-Texture model URL:', req.body.model_url);
+
+    try {
         const textToTextureResponse = await axios.post('https://api.meshy.ai/v1/text-to-texture', JSON.stringify({
-            model_url: modelUrl, 
-            object_prompt: req.body.prompt, 
+            model_url: req.body.model_url, 
+            object_prompt: req.body.object_prompt, 
             style_prompt: req.body.style_prompt || "realistic", 
             resolution: req.body.resolution || "2048", 
             enable_pbr: req.body.enable_pbr || true, 
@@ -41,13 +52,12 @@ app.post('/create-task', async (req, res) => {
         console.log('Text-to-Texture response:', textToTextureResponse.data);
 
         res.json({
-            textTo3D: textTo3DResponse.data,
             textToTexture: textToTextureResponse.data
         });
 
     } catch (error) {
-        console.error('Error creating task:', error);
-        res.status(500).json({ message: 'Failed to create task' });
+        console.error('Error creating Text-to-Texture task:', error);
+        res.status(500).json({ message: 'Failed to create Text-to-Texture task' });
     }
 });
 
